@@ -1,0 +1,370 @@
+
+
+    local Byte         = string.byte;
+    local Char         = string.char;
+    local Sub          = string.sub;
+    local Concat       = table.concat;
+    local Insert       = table.insert;
+    local LDExp        = math.ldexp;
+    local GetFEnv      = getfenv or function() return _ENV end;
+    local Setmetatable = setmetatable;
+    local Select       = select;
+
+    local Unpack = unpack or table.unpack;
+    local ToNumber = tonumber;local function decompress(b)local c,d,e="ScriptGuard","ScriptGuard",{}local f=256;local g={}for h=0,f-1 do g[h]=Char(h)end;local i=1;local function k()local l=ToNumber(Sub(b, i,i),36)i=i+1;local m=ToNumber(Sub(b, i,i+l-1),36)i=i+l;return m end;c=Char(k())e[1]=c;while i<#b do local n=k()if g[n]then d=g[n]else d=c..Sub(c, 1,1)end;g[f]=c..Sub(d, 1,1)e[#e+1],c,f=d,d,f+1 end;return table.concat(e)end;local ByteString=decompress('25524R27524R24S27625O25Q26725F26425E25R27727927B27A25H26524R24O27625C25Q25U24R26J2762681Q22F23123N21022N1L25H26I22B26W21G24521125C23R25Q25D22Q22H26S21N24A101M23625X23223125Q221181E25M21925G23023K26322721725Q21B26L16181D1C24I26D23Z23225Y26U2581N25Z227102301D1623224R24H27625J25G25M25R26026726125E25H25O24R24V27925M25I25Q27H27526B26726726326K27B24R2512762591D1K23C25I23H21W1F23Z24P22H26P22T23P23626425O23O2662141D26W21L25N1022L22S23U23C21H27627624T27629V29X29Z27N2BF26625L2A127625K25F25M26127O2BC2762BT27622325G26J2BW27622J24424R2BM27525X23D22O1825121Z22Z1W27026621C24C1D26O1G26Q25027124K1722P24722G24V22T21B22226E1D22C26V21B21R21M24R1U24I1E25226K23A1R24R22225W21H21O21L21K24426426I22H24Z25Q23Y21125121821J22J21Q21Q22H24122D24322123K23J2701L22726U21O2411924O24D22822326M22521926Q23M2182212311324022S25B23I25I2591025C2C124R21726R2C02BU27526J22Q27624P2532F324R2552A227524Q27625524D2F72BC2BE2FE24R24P2FB26I2FN2BN2BU2A22FO2752FV2A22FD2BC2FY2F32G12FF27424R2BE24I2FG27527829P27523V2GA27H24G2FB27524J29O2762GE24R2GK2GK24N2BC2G82BC2G529P24M2G924R2GH24L2GY2GR24K2762FD29P24Y24R2FF24R2C42H12GK2762C42H42GX27624X24R2H12FO2FV23L24R2G82GX2H124R2HP2G82H12GX24V23X2GL2542H92FB24C2GL2572FG2I52GH2H42762FF2GR2FZ2552I52GX2IB2A12GR2GH26T2I323V25A24R2H42H12H423V29P2H42H425624R2GN2IX2IR2BC2I72FL2BC2IZ24U2F32742782BU2I22FZ27625B2HL2F32IQ2HT2GU24R2IQ2FV2752742G82G52752I22JC2BC2JH2GC2BC2IQ2IJ2AH2J32JD24R2592FR2762I22G82I22762IQ2JT2K32KC2K82IQ2IQ2BU2KJ2JJ2JN2I32G52582K42GI24R24Z24R2HI2HL2J92GX26K2I32IQ24V2522762L12FF24L2KZ24R2L72K62A12L52752LC23V23W24R2H82KE2J02LJ2HK2K727424T2692LK2HB2I32HK2L42HF2I32BJ2KV2KV2KR24R24124R24W2KO2H823V2462M72MD2KF2F92K72HK2GN2F92F92742GN2KR2KR2KF2K72F92KL2MD2752JF2FI2FF24T26B2KO2LT2FF2K72LY2752N22752C42IQ2K727524L2402KW24R26E2L22LE2762NH2FF2N524R2702IO2LJ2LL2GI2ND2NF26Y2I32H82NN2NW2NM2LF24R26X2M027O2M224R2M42M62HK2IQ2MA2H12HK2HK2MM2GH2MO2KT2N924R2HK2MV2O22N72LV2IZ2KV2LZ2742H82762492JI2G02O226O2M02I22IZ2G82IZ24R2482G624R2I72IZ2HZ2GZ2AF2M02C42MY2BC2C42FO2JW24R2OY2JP2OO2762BM2FF25726N2BV2KP2FI2752J92JQ2MX2PA2GD27U2FF2FF2782552FQ2A22HE2FK2FS2K82BE2J62BD2Q42QE2BE2G42GJ2HQ2GY2G82JZ2GN2G82G82GH2GV2GL2GD27529P29P2GR2762GH2JM24R2GR2KX2G52HS2GY2IT2H52752GR25S2PH2PB2QY2N824R2IZ2K22HK2I72HN2752HP2IA2RJ2HU2PF2I72H42PE2GR2662KP2I52GR2I72JQ2IH2KS2I32H12J62IG2J32IJ24V2R824R22Y2IO2IQ2IZ2RY2J029P2IZ2SQ2J02752SR2K22742QD2K92A72JX2QP2MT2QI2752K72S62BC2KR2T62JG2O82K82752JH2GH2JH2KD2T12BC2K72R32T72RM2F32KV2P72K02KU2TC2KO2GH2KK2752KR2TG2BC2KV2TW2FV2OJ2BU2U42TM2KR2QN2LU2IJ2G52HK2KX2L92NF112I32KR2NN2UH2L82NE2GX21I2I32KV2NN2UP2O12762UL2LN2MD2MP2UX2F92KV2LR2LT2M8192I32F92NN2V62HA27O2OF2LU2M524R2L52KR2M82MB2VG2VL2KF2AG2KV2F92GN2AG2AG2MM2752H82H82KF2KV2AG2U52VL2MV2BC21F2I32MZ2TB162UQ2NJ2752W92HA2C42KR2OT2HL2UN24R2DD2FF2UJ2O22WL2WB24R1H2NQ2UY2NT2WJ1V2I32M82NN2WX2UU2751U2O52OM2X62OW2M62F92VI2J02H12MK2GI23V2GH2VW2OK2TB2MS2WQ2WD2RL2I22ON2RL2JH2M82OX2OZ2H52O21L2P324R2I22GH2KC2P92GK2742JE2I02GX2172RI27O2SX2C42A22GT2752OY2JF2WQ29N2HA23T2I32C12W02FJ2RV2I32HA2OW2M02YW2R527525N27626D22022821K25V21022I21V25H26J22C24Q21G25D1Z25C23N24B24222R22H24N23325M22K1P21725Z21M22O2411M22H22N24223G24621K23M2641J21625L23I25322C22G1B1F24G26J26722Y25S24O26I1H23R2211321M1A1A23326S22O26U21425522424821223J25J1D24N22Y25P26W22O21426523J22625J24W1L21822I22P26R22F26222324I2672F32J62BG29Y2A02BW2602BL2QF2BP2BR2EY2PX2BC2BY2F22BU2C32C52762C82CA2CC2CE2CG2CI2CK2CM2CO2CQ2CS2CU2CW2CY2D02D22D42D62D82DA2DC2DE2DG2DI2DK2DM2DO2DQ2DS2DU2DW2DY2E02E22E42E62E82EA2EC2EE2EG2EI2EK2EM2EO2EQ2ES2EU2EW2EY2F031252BU26J26S2FG2FQ2Q72F327O2HA2K827O31213140313W2BJ2U92J92JP2G52BE2BW2GN2QH2BN2G5278314A2GF2782Q12QO2R62G82SC2R02SZ2G52GH2QD2FD2G82IQ2WE2NF2PN2HC2R72BC2UD2FR2HO2GO31502HI2HP2GK2GX2IE2I02G82H42G42I52QU2I82GL2SX2FF2GH2BW2SD2GR314S2GR29P26Q2SK2JI2GX2GK2IV2JI2H129P2GN2H12HD2BC2H4314J2762I72YJ2TN2T32GI31212I22KX2TA316G2ST24R2JH2PQ2IZ2GK2TQ2GI316C2KA2F32JH2JL2TH316V2JQ2KO2PQ2SW2KT2TD2TN2MT2JT2FV2JH2TZ2TA317931732JH2U92K72QD2KQ2QK2UF2BE26G2I32JH2NN317L2L82J9317K2NI317O2WT2KV2TE2UX2NS2GH2LS2TS2NE2FF2NY2O2318327527O2OJ2NB2OA316K2TS2VK2VD2YY2MD2OC2SS2MD2M82GH2GN2K72K7318H2IQ2XT2T02XQ2JF2OY2MY2N02JH26L317T2O23191314W2JH2TW2NU2BE26A317M2WQ319A2X22O3317V318D2H0317R2NG2WA2NN2NL31882TB2KR318B2LU2JH2KV23V2H12XI318N2GH318P2PF2LV2JH2YV2NN31942RL2I72M42RL2OS2BC2OY316X2NN2712XZ2I72GK2S62P92J92H431692I029P2HK314W2Q02PK2W631AC2YW2PR27526U2M023R2YR2VV2IC2FA24R313S2FW2FA2JP31BB31B331BC31B931BF2TC31BE31BH31BD31BK31BG31BI31BN31BL31BJ31BM31BP31BO31BR31BU31BQ2TT31BA31BS31BZ31BV31BT31BW31C231C431C031BW2BC31C531C131C631B631B631C231CC31BY319O2762F631CH2YW314J31CM2FA31CN31AT31CQ24R31CP31CS27631CT31CW31CV31CY31CR31CX31D031CZ31CU31D231D531D431D731D131D831D331D931DC31CF31DA31D631DD31DG31DB31DJ31DI31DL31DF31DN316731DK31D72BC31DH31DO31DE31B631D931DV31DS2QJ2752J631E22FA31E331E131E02QK31E531E831E731E931EC31EB31EE31E631EG31EA31EH31ED31EJ31EF31EI31EN31EK31EO31DE31EP31ES31E72QE31EL31EW31EQ31EX31ET31EZ31EU31EM316C31EY31F531F431DV31EP31DY31F331E7');
+
+local BitXOR = bit and bit.bxor or function(a,b)
+    local p,c=1,0
+    while a>0 and b>0 do
+        local ra,rb=a%2,b%2
+        if ra~=rb then c=c+p end
+        a,b,p=(a-ra)/2,(b-rb)/2,p*2
+    end
+    if a<b then a=b end
+    while a>0 do
+        local ra=a%2
+        if ra>0 then c=c+p end
+        a,p=(a-ra)/2,p*2
+    end
+    return c
+end
+
+local function gBit(Bit, Start, End)
+	if End then
+		local Res = (Bit / 2 ^ (Start - 1)) % 2 ^ ((End - 1) - (Start - 1) + 1);
+		return Res - Res % 1;
+	else
+		local Plc = 2 ^ (Start - 1);
+        return (Bit % (Plc + Plc) >= Plc) and 1 or 0;
+	end;
+end;
+
+local Pos = 1;
+
+local function gBits32()
+    local W, X, Y, Z = Byte(ByteString, Pos, Pos + 3);
+
+	W = BitXOR(W, 171)
+	X = BitXOR(X, 171)
+	Y = BitXOR(Y, 171)
+	Z = BitXOR(Z, 171)
+
+    Pos	= Pos + 4;
+    return (Z*16777216) + (Y*65536) + (X*256) + W;
+end;
+
+local function gBits8()
+    local F = BitXOR(Byte(ByteString, Pos, Pos), 171);
+    Pos = Pos + 1;
+    return F;
+end;
+
+local function gBits16()
+    local W, X = Byte(ByteString, Pos, Pos + 2);
+
+	W = BitXOR(W, 171)
+	X = BitXOR(X, 171)
+
+    Pos	= Pos + 2;
+    return (X*256) + W;
+end;
+
+local function gFloat()
+	local Left = gBits32();
+	local Right = gBits32();
+	local IsNormal = 1;
+	local Mantissa = (gBit(Right, 1, 20) * (2 ^ 32))
+					+ Left;
+	local Exponent = gBit(Right, 21, 31);
+	local Sign = ((-1) ^ gBit(Right, 32));
+	if (Exponent == 0) then
+		if (Mantissa == 0) then
+			return Sign * 0; -- +-0
+		else
+			Exponent = 1;
+			IsNormal = 0;
+		end;
+	elseif (Exponent == 2047) then
+        return (Mantissa == 0) and (Sign * (1 / 0)) or (Sign * (0 / 0));
+	end;
+	return LDExp(Sign, Exponent - 1023) * (IsNormal + (Mantissa / (2 ^ 52)));
+end;
+
+local gSizet = gBits32;
+local function gString(Len)
+    local Str;
+    if (not Len) then
+        Len = gSizet();
+        if (Len == 0) then
+            return '';
+        end;
+    end;
+
+    Str	= Sub(ByteString, Pos, Pos + Len - 1);
+    Pos = Pos + Len;
+
+	local FStr = {}
+	for Idx = 1, #Str do
+		FStr[Idx] = Char(BitXOR(Byte(Sub(Str, Idx, Idx)), 171))
+	end
+
+    return Concat(FStr);
+end;
+
+local gInt = gBits32;
+local function _R(...) return {...}, Select('#', ...) end
+
+local function Deserialize()
+    local Instrs = {};
+    local Functions = {};
+	local Lines = {};
+    local Chunk = 
+	{
+		Instrs,
+		Functions,
+		nil,
+		Lines
+	};
+	local ConstCount = gBits32()
+    local Consts = {}
+
+	for Idx=1, ConstCount do 
+		local Type =gBits8();
+		local Cons;
+	
+		if(Type==1) then Cons = (gBits8() ~= 0);
+		elseif(Type==3) then Cons = gFloat();
+		elseif(Type==0) then Cons = gString();
+		end;
+		
+		Consts[Idx] = Cons;
+	end;
+
+                            local function createInstruction(instructionType)
+                                local instruction = {gBits16(), gBits16(), nil, nil}
+
+                                if instructionType == 0 then 
+                                    instruction[3] = gBits16()
+                                    instruction[4] = gBits16()
+                                elseif instructionType == 1 then 
+                                    instruction[3] = gBits32()
+                                elseif instructionType == 2 then 
+                                    instruction[3] = gBits32() - (2 ^ 16)
+                                elseif instructionType == 3 then 
+                                    instruction[3] = gBits32() - (2 ^ 16)
+                                    instruction[4] = gBits16()
+                                else
+                                    error("Invalid instruction type: " .. tostring(instructionType))
+                                end
+
+                                return instruction
+                            end
+
+                            local function applyMask(instruction, mask)
+                                if gBit(mask, 1, 1) == 1 then 
+                                    instruction[2] = Consts[instruction[2]] 
+                                end
+                                if gBit(mask, 2, 2) == 1 then 
+                                    instruction[3] = Consts[instruction[3]] 
+                                end
+                                if gBit(mask, 3, 3) == 1 then 
+                                    instruction[4] = Consts[instruction[4]] 
+                                end
+                            end
+
+                            for idx = 1, gBits32() do 
+                                local descriptor = gBits8()
+
+                                if gBit(descriptor, 1, 1) == 0 then
+                                    local instructionType = gBit(descriptor, 2, 3)
+                                    local mask = gBit(descriptor, 4, 6)
+
+                                    local instruction = createInstruction(instructionType)
+
+                                    applyMask(instruction, mask)
+
+                                    Instrs[idx] = instruction
+                                end
+                            end
+                            ;for Idx=1,gBits32() do Functions[Idx-1]=Deserialize();end;Chunk[3] = gBits8();for Idx=1,gBits32() do Lines[Idx]=gBits32();end;return Chunk;end;
+local PCall = pcall
+local function Wrap(Chunk, Upvalues, Env)
+	local Instr = Chunk[1];
+	local Proto = Chunk[2];
+	local Params = Chunk[3];
+
+	return function(...)
+		local InstrPoint = 1;
+		local Top = -1;
+
+		local Args = {...};
+		local PCount = Select('#', ...) - 1;
+
+		local function Loop()
+			local Instr  = Instr; 
+			local Const  = Const; 
+			local Proto  = Proto; 
+			local Params = Params;
+
+			local _R = _R
+			local Vararg = {};
+
+			local Lupvals	= {};
+			local Stk		= {};
+	
+			for Idx = 0, PCount do
+				if (Idx >= Params) then
+					Vararg[Idx - Params] = Args[Idx + 1];
+				else
+					Stk[Idx] = Args[Idx + 1];
+				end;
+			end;
+	
+			local Varargsz = PCount - Params + 1
+
+			local Inst;
+			local Enum;	
+
+			while true do
+				Inst		= Instr[InstrPoint];
+				Enum		= Inst[1];if Enum <= 36 then if Enum <= 17 then if Enum <= 8 then if Enum <= 3 then if Enum <= 1 then if Enum > 0 then Stk[Inst[2]]=#Stk[Inst[3]];else 
+local A = Inst[2]
+Stk[A] = Stk[A](Stk[A + 1]) 
+end; elseif Enum > 2 then Stk[Inst[2]]=Stk[Inst[3]]+Stk[Inst[4]];else Stk[Inst[2]]();end; elseif Enum <= 5 then if Enum == 4 then Env[Inst[3]] = Stk[Inst[2]];else if(Inst[2] < Stk[Inst[4]])then InstrPoint=InstrPoint+1;else InstrPoint=Inst[3];end;end; elseif Enum <= 6 then 
+local A = Inst[2]
+Stk[A] = Stk[A]()
+ elseif Enum == 7 then Top=Inst[2];else 
+local A = Inst[2]
+Stk[A] = Stk[A]()
+end; elseif Enum <= 12 then if Enum <= 10 then if Enum > 9 then local A;Stk[Inst[2]] = Stk[Inst[3]] % Inst[4];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Stk[Inst[3]] + Inst[4];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];
+A= Inst[2]
+Stk[A] = Stk[A](Unpack(Stk, A + 1, Inst[3])) 
+InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]][Stk[Inst[4]]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];
+A= Inst[2]
+Stk[A] = Stk[A](Unpack(Stk, A + 1, Inst[3])) 
+InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]][Stk[Inst[4]]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Inst[3];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Inst[3];else Stk[Inst[2]] = Stk[Inst[3]] + Inst[4];end; elseif Enum > 11 then 
+local A = Inst[2];
+local Index = Stk[A]
+local Step = Stk[A + 2];
+if (Step > 0) then 
+	if (Index > Stk[A+1]) then
+		InstrPoint = Inst[3];
+	else
+		Stk[A+3] = Index;
+	end
+elseif (Index < Stk[A+1]) then
+	InstrPoint = Inst[3];
+else
+	Stk[A+3] = Index;
+end
+else Stk[Inst[2]] = Stk[Inst[3]] * Inst[4];end; elseif Enum <= 14 then if Enum > 13 then Stk[Inst[2]] = Stk[Inst[3]] / Inst[4];else Stk[Inst[2]]=Env[Inst[3]];end; elseif Enum <= 15 then local B=Inst[3];local K=Stk[B] for Idx=B+1,Inst[4] do K=K..Stk[Idx];end;Stk[Inst[2]]=K; elseif Enum > 16 then do return end;else Stk[Inst[2]]();end; elseif Enum <= 26 then if Enum <= 21 then if Enum <= 19 then if Enum > 18 then Stk[Inst[2]]=Stk[Inst[3]][Stk[Inst[4]]];else if (Inst[2] < Stk[Inst[4]]) then InstrPoint=Inst[3]; else InstrPoint=InstrPoint+1; end;end; elseif Enum > 20 then Stk[Inst[2]]=Stk[Inst[3]] - Inst[4];else Stk[Inst[2]]=Stk[Inst[3]][Stk[Inst[4]]];end; elseif Enum <= 23 then if Enum == 22 then Stk[Inst[2]] = Stk[Inst[3]] * Inst[4];else Stk[Inst[2]] = Stk[Inst[3]] + Inst[4];end; elseif Enum <= 24 then Stk[Inst[2]]=Stk[Inst[3]] - Inst[4]; elseif Enum > 25 then 
+local A = Inst[2]
+Stk[A] = Stk[A](Stk[A + 1]) 
+else do return end;end; elseif Enum <= 31 then if Enum <= 28 then if Enum > 27 then Stk[Inst[2]]=Wrap(Proto[Inst[3]],nil,Env);else 
+local A = Inst[2]
+Stk[A] = Stk[A](Unpack(Stk, A + 1, Top))
+end; elseif Enum <= 29 then InstrPoint=Inst[3]; elseif Enum > 30 then Stk[Inst[2]][Inst[3]] = Stk[Inst[4]];else 
+local A = Inst[2]
+Stk[A] = Stk[A](Unpack(Stk, A + 1, Top))
+end; elseif Enum <= 33 then if Enum == 32 then Stk[Inst[2]]=Stk[Inst[3]];else if(Stk[Inst[2]]~=Stk[Inst[4]])then InstrPoint=InstrPoint+1;else InstrPoint=Inst[3];end;end; elseif Enum <= 34 then 
+local A = Inst[2]
+local Results, Limit = _R(Stk[A](Unpack(Stk, A + 1, Inst[3])))
+Top = Limit + A - 1
+local Edx = 0;
+for Idx = A, Top do 
+	Edx = Edx + 1;
+	Stk[Idx] = Results[Edx];
+end;
+ elseif Enum == 35 then 
+local A = Inst[2];
+local Index = Stk[A]
+local Step = Stk[A + 2];
+if (Step > 0) then 
+	if (Index > Stk[A+1]) then
+		InstrPoint = Inst[3];
+	else
+		Stk[A+3] = Index;
+	end
+elseif (Index < Stk[A+1]) then
+	InstrPoint = Inst[3];
+else
+	Stk[A+3] = Index;
+end
+else Stk[Inst[2]]={};end; elseif Enum <= 55 then if Enum <= 45 then if Enum <= 40 then if Enum <= 38 then if Enum > 37 then 
+local A = Inst[2];
+local Step = Stk[A + 2];
+local Index = Stk[A] + Step;
+Stk[A] = Index;
+if (Step > 0) then 
+	if (Index <= Stk[A+1]) then
+		InstrPoint = Inst[3];
+		Stk[A+3] = Index;
+	end
+elseif (Index >= Stk[A+1]) then
+	InstrPoint = Inst[3];
+	Stk[A+3] = Index;
+end
+else Env[Inst[3]] = Stk[Inst[2]];end; elseif Enum > 39 then Stk[Inst[2]]={};else Stk[Inst[2]] = Stk[Inst[3]] % Inst[4];end; elseif Enum <= 42 then if Enum > 41 then Stk[Inst[2]][Stk[Inst[3]]]=Stk[Inst[4]];else 
+local A = Inst[2]
+local Results, Limit = _R(Stk[A](Unpack(Stk, A + 1, Inst[3])))
+Top = Limit + A - 1
+local Edx = 0;
+for Idx = A, Top do 
+	Edx = Edx + 1;
+	Stk[Idx] = Results[Edx];
+end;
+end; elseif Enum <= 43 then Stk[Inst[2]] = Stk[Inst[3]] / Inst[4]; elseif Enum > 44 then if(Stk[Inst[2]] < Stk[Inst[4]])then InstrPoint=InstrPoint+1;else InstrPoint=Inst[3];end;else 
+do return Stk[Inst[2]] end
+end; elseif Enum <= 50 then if Enum <= 47 then if Enum > 46 then Stk[Inst[2]][Stk[Inst[3]]]=Stk[Inst[4]];else Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];end; elseif Enum <= 48 then if(Inst[2] < Stk[Inst[4]])then InstrPoint=InstrPoint+1;else InstrPoint=Inst[3];end; elseif Enum == 49 then Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];else Top=Inst[2];end; elseif Enum <= 52 then if Enum == 51 then local B=Inst[3];local K=Stk[B] for Idx=B+1,Inst[4] do K=K..Stk[Idx];end;Stk[Inst[2]]=K;else local A=Inst[2];local B=Stk[Inst[3]];Stk[A+1]=B;Stk[A]=B[Inst[4]];end; elseif Enum <= 53 then 
+local A = Inst[2];
+local Step = Stk[A + 2];
+local Index = Stk[A] + Step;
+Stk[A] = Index;
+if (Step > 0) then 
+	if (Index <= Stk[A+1]) then
+		InstrPoint = Inst[3];
+		Stk[A+3] = Index;
+	end
+elseif (Index >= Stk[A+1]) then
+	InstrPoint = Inst[3];
+	Stk[A+3] = Index;
+end
+ elseif Enum == 54 then Stk[Inst[2]]=Env[Inst[3]];else Stk[Inst[2]] = Inst[3];end; elseif Enum <= 64 then if Enum <= 59 then if Enum <= 57 then if Enum == 56 then Stk[Inst[2]] = Stk[Inst[3]] % Inst[4];else 
+local A = Inst[2]
+Stk[A] = Stk[A](Unpack(Stk, A + 1, Inst[3])) 
+end; elseif Enum > 58 then if (Inst[2] < Stk[Inst[4]]) then InstrPoint=Inst[3]; else InstrPoint=InstrPoint+1; end;else Stk[Inst[2]]=Stk[Inst[3]]-Stk[Inst[4]];end; elseif Enum <= 61 then if Enum == 60 then Stk[Inst[2]]=Stk[Inst[3]]-Stk[Inst[4]];else Stk[Inst[2]] = Stk[Inst[3]] / Inst[4];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]]-Stk[Inst[4]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Stk[Inst[3]] / Inst[4];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Stk[Inst[3]] * Inst[4];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];InstrPoint=Inst[3];end; elseif Enum <= 62 then Stk[Inst[2]] = Inst[3]; elseif Enum == 63 then Stk[Inst[2]]=Stk[Inst[3]];else local A=Inst[2];local B=Stk[Inst[3]];Stk[A+1]=B;Stk[A]=B[Inst[4]];end; elseif Enum <= 69 then if Enum <= 66 then if Enum == 65 then local Step;local Index;local A;Stk[Inst[2]] = Inst[3];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Inst[3];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Env[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Env[Inst[3]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]]={};InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Inst[3];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Inst[3];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];Stk[Inst[2]] = Inst[3];InstrPoint = InstrPoint + 1;Inst = Instr[InstrPoint];
+A= Inst[2];
+Index= Stk[A]
+Step= Stk[A + 2];
+if (Step > 0) then 
+	if (Index > Stk[A+1]) then
+		InstrPoint = Inst[3];
+	else
+		Stk[A+3] = Index;
+	end
+elseif (Index < Stk[A+1]) then
+	InstrPoint = Inst[3];
+else
+	Stk[A+3] = Index;
+end
+else 
+local A = Inst[2]
+Stk[A] = Stk[A](Unpack(Stk, A + 1, Inst[3])) 
+end; elseif Enum <= 67 then InstrPoint=Inst[3]; elseif Enum > 68 then 
+do return Stk[Inst[2]] end
+else Stk[Inst[2]][Inst[3]] = Stk[Inst[4]];end; elseif Enum <= 71 then if Enum == 70 then Stk[Inst[2]]=Stk[Inst[3]]+Stk[Inst[4]];else Stk[Inst[2]]=#Stk[Inst[3]];end; elseif Enum <= 72 then if(Stk[Inst[2]] < Stk[Inst[4]])then InstrPoint=InstrPoint+1;else InstrPoint=Inst[3];end; elseif Enum > 73 then if(Stk[Inst[2]]~=Stk[Inst[4]])then InstrPoint=InstrPoint+1;else InstrPoint=Inst[3];end;else Stk[Inst[2]]=Wrap(Proto[Inst[3]],nil,Env);end;
+				InstrPoint	= InstrPoint + 1;
+			end;
+		end;
+
+		A, B = _R(PCall(Loop))
+		if not A[1] then
+			local line = Chunk[7][InstrPoint] or '?'
+			error('ERROR IN ScriptGuard SCRIPT [LINE ' .. line .. ']:' .. A[2])
+		else
+			return Unpack(A, 2, B)
+		end;
+	end;
+end;	
+return Wrap(Deserialize(), {}, GetFEnv())();
+
